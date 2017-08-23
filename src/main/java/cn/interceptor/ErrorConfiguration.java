@@ -1,0 +1,27 @@
+package cn.interceptor;
+
+import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
+import org.springframework.boot.context.embedded.ErrorPage;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
+
+@Configuration
+public class ErrorConfiguration {
+	@Bean
+	public EmbeddedServletContainerCustomizer custom() {
+		return new EmbeddedServletContainerCustomizer() {
+			
+			@Override
+			public void customize(ConfigurableEmbeddedServletContainer container) {
+				// TODO Auto-generated method stub
+				container.addErrorPages(new ErrorPage(HttpStatus.BAD_REQUEST,"/400"));
+				container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR,"/500"));
+				container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND,"/404"));
+			}
+		};
+	}
+	
+
+}
